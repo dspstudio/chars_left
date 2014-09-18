@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script>
+	function charsLeft(field, limit) {
+		$(field).after('<div id="charNum">'+ limit +' characters left</div>');
+		var ini_len = $(field).val().length;
+		if(ini_len > 0){
+			var char = limit - ini_len;
+			$(field).next().text( char + ' characters left');
+		}
+		$(field).keyup(function(){
+			var len = $(this).val().length;
+			if (len >= limit) {
+				$(this).val($(this).val().substring(0,limit)); 
+				$(this).next().text('you have reached the limit');
+			} else if(limit - len == 1) {
+				$(this).next().text( '1 character left');
+			} else {
+				var char = limit - len;
+				$(this).next().text( char + ' characters left');
+			}
+		});
+	}
+	$(document).ready(function () {
+		charsLeft("textarea[name$='field']", 10);
+	});
+	</script>
+</head>
+<body>
+<textarea id="field" name="field">123</textarea>
+
+</body>
+</html>
